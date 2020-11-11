@@ -2,6 +2,7 @@ package com.example.mymap;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,12 +19,12 @@ import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.*;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, OnMyLocationButtonClickListener,
-        OnMyLocationClickListener, ActivityCompat.OnRequestPermissionsResultCallback {
+public class MarkerMapActivity extends FragmentActivity implements OnMapReadyCallback, OnMyLocationButtonClickListener,
+        OnMyLocationClickListener, ActivityCompat.OnRequestPermissionsResultCallback, GoogleMap.OnMarkerDragListener {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean permissionDenied = false;
     private GoogleMap mMap;
@@ -53,6 +54,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
         enableMyLocation();
+
+        createMarkers();
+        createShapes();
     }
 
     private void enableMyLocation() {
@@ -79,6 +83,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMyLocationClick(@NonNull Location location) {
         Toast.makeText(this, String.format("Current location\nLatitude: %s\nLongitude: %s", location.getLatitude(),
                 location.getLongitude()), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        LatLng latLng = marker.getPosition();
+        Toast.makeText(this, String.format("Dragged marker location\nLatitude: %s\nLongitude: %s", latLng.latitude,
+                latLng.longitude), Toast.LENGTH_LONG).show();
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -118,4 +137,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.e("Exception: %s", e.getMessage(), e);
         }
     }
+
+    private void createMarkers() {
+        MarkerOptions[] markers = new MarkerOptions[]{
+                new MarkerOptions().position(new LatLng(50, 20)).title("Marker nr 1").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)),
+                new MarkerOptions().position(new LatLng(50.055745, 19.892726)).title("Marker nr 2, draggable").draggable(true),
+                new MarkerOptions().position(new LatLng(50.075787, 19.906205)).title("Marker nr 3").alpha(0.5f),
+                new MarkerOptions().position(new LatLng(50.091375, 19.939234)).title("Marker nr 4").flat(true),
+                new MarkerOptions().position(new LatLng(50.065849, 19.959365)).title("Marker nr 5, rotated").rotation(180.0f),
+                new MarkerOptions().position(new LatLng(50.024384, 19.910597)).title("Marker nr 5, with extra info").snippet("extra info"),
+        };
+
+        for (MarkerOptions marker : markers) {
+            this.mMap.addMarker(marker);
+        }
+
+        mMap.setOnMarkerDragListener(this);
+    }
+
+    private void createShapes() {
+        mMap.addPolygon(new PolygonOptions()
+                .add(new LatLng(52.199611, 20.835813),
+                        new LatLng(52.302322, 21.046410),
+                        new LatLng(52.229550, 21.124648),
+                        new LatLng(52.139891, 21.014490))
+                .strokeColor(Color.BLUE)
+                .fillColor(0x15FF0000));
+
+        mMap.addPolyline(new PolylineOptions().add(
+                new LatLng(50.175747, 19.987861),
+                new LatLng(50.219867, 20.031006),
+                new LatLng(50.235812, 20.080532),
+                new LatLng(50.252589, 20.087759),
+                new LatLng(50.291865, 20.045465),
+                new LatLng(50.296471, 20.033181),
+                new LatLng(50.310546, 20.039975))
+                .color(Color.GREEN));
+    }
+
 }
