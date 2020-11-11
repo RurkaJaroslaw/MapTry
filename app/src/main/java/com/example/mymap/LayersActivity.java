@@ -27,9 +27,6 @@ import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_SATELLITE;
 import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN;
 
-/**
- * Demonstrates the different base layers of a map.
- */
 public class LayersActivity extends AppCompatActivity
         implements OnItemSelectedListener, OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback {
@@ -39,15 +36,9 @@ public class LayersActivity extends AppCompatActivity
     private GoogleMap mMap;
 
     private CheckBox mTrafficCheckbox;
-
     private CheckBox mMyLocationCheckbox;
-
     private Spinner mSpinner;
 
-    /**
-     * Flag indicating whether a requested permission has been denied after returning in
-     * {@link #onRequestPermissionsResult(int, String[], int[])}.
-     */
     private boolean mShowPermissionDeniedDialog = false;
 
     @Override
@@ -80,15 +71,12 @@ public class LayersActivity extends AppCompatActivity
 
     private boolean checkReady() {
         if (mMap == null) {
-            Toast.makeText(this, R.string.map_not_ready, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Map is not ready yet", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
     }
 
-    /**
-     * Called when the Traffic checkbox is clicked.
-     */
     public void onTrafficToggled(View view) {
         updateTraffic();
     }
@@ -100,9 +88,6 @@ public class LayersActivity extends AppCompatActivity
         mMap.setTrafficEnabled(mTrafficCheckbox.isChecked());
     }
 
-    /**
-     * Called when the MyLocation checkbox is clicked.
-     */
     public void onMyLocationToggled(View view) {
         updateMyLocation();
     }
@@ -141,21 +126,6 @@ public class LayersActivity extends AppCompatActivity
         return false;
     }
 
-    //    public static class PermissionDeniedDialog extends DialogFragment {
-//
-//        private static final String ARGUMENT_FINISH_ACTIVITY = "finish";
-//
-//        private boolean finishActivity = false;
-//
-//        public static PermissionDeniedDialog newInstance(boolean finishActivity) {
-//            Bundle arguments = new Bundle();
-//            arguments.putBoolean(ARGUMENT_FINISH_ACTIVITY, finishActivity);
-//
-//            PermissionDeniedDialog dialog = new PermissionDeniedDialog();
-//            dialog.setArguments(arguments);
-//            return dialog;
-//        }
-
     @SuppressLint("MissingPermission")
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
@@ -179,8 +149,6 @@ public class LayersActivity extends AppCompatActivity
     }
 
     private void updateMapType() {
-        // No toast because this can also be called by the Android framework in onResume() at which
-        // point mMap may not be ready yet.
         if (mMap == null) {
             return;
         }
@@ -205,6 +173,5 @@ public class LayersActivity extends AppCompatActivity
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        // Do nothing.
     }
 }
