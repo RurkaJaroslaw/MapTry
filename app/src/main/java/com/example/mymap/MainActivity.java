@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(MainActivity.this, MarkerMapActivity.class);
+                Intent myIntent = new Intent(MainActivity.this, LayersActivity.class);
                 MainActivity.this.startActivity(myIntent);
             }
         });
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent myIntent = new Intent(MainActivity.this, SimpleMapActivity.class);
+                Intent myIntent = new Intent(MainActivity.this, MarkerMapActivity.class);
                 MainActivity.this.startActivity(myIntent);
             }
         });

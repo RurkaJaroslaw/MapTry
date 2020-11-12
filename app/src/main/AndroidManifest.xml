@@ -42,6 +42,9 @@
         </activity>
         <activity android:name=".MarkerMapActivity">
         </activity>
+        <activity android:name=".LayersActivity">
+        </activity>
+
 
     </application>
 
