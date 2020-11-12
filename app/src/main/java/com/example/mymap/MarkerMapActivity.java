@@ -145,7 +145,7 @@ public class MarkerMapActivity extends FragmentActivity implements OnMapReadyCal
                 new MarkerOptions().position(new LatLng(50.075787, 19.906205)).title("Marker nr 3").alpha(0.5f),
                 new MarkerOptions().position(new LatLng(50.091375, 19.939234)).title("Marker nr 4").flat(true),
                 new MarkerOptions().position(new LatLng(50.065849, 19.959365)).title("Marker nr 5, rotated").rotation(180.0f),
-                new MarkerOptions().position(new LatLng(50.024384, 19.910597)).title("Marker nr 5, with extra info").snippet("extra info"),
+                new MarkerOptions().position(new LatLng(50.024384, 19.910597)).title("Marker nr 6, with extra info").snippet("extra info"),
         };
 
         for (MarkerOptions marker : markers) {

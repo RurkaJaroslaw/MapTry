@@ -44,6 +44,8 @@
         </activity>
         <activity android:name=".LayersActivity">
         </activity>
+        <activity android:name=".ClusteringMapActivity">
+        </activity>
 
 
     </application>
