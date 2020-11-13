@@ -33,7 +33,7 @@ public class LayersActivity extends AppCompatActivity
 
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
-    private GoogleMap mMap;
+    private GoogleMap googleMap;
 
     private CheckBox mTrafficCheckbox;
     private CheckBox mMyLocationCheckbox;
@@ -63,14 +63,14 @@ public class LayersActivity extends AppCompatActivity
 
     @Override
     public void onMapReady(GoogleMap map) {
-        mMap = map;
+        googleMap = map;
         updateMapType();
         updateTraffic();
         updateMyLocation();
     }
 
     private boolean checkReady() {
-        if (mMap == null) {
+        if (googleMap == null) {
             Toast.makeText(this, "Map is not ready yet", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -85,7 +85,7 @@ public class LayersActivity extends AppCompatActivity
         if (!checkReady()) {
             return;
         }
-        mMap.setTrafficEnabled(mTrafficCheckbox.isChecked());
+        googleMap.setTrafficEnabled(mTrafficCheckbox.isChecked());
     }
 
     public void onMyLocationToggled(View view) {
@@ -99,14 +99,14 @@ public class LayersActivity extends AppCompatActivity
         }
 
         if (!mMyLocationCheckbox.isChecked()) {
-            mMap.setMyLocationEnabled(false);
+            googleMap.setMyLocationEnabled(false);
             return;
         }
 
         // Enable the location layer. Request the location permission if needed.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(true);
+            googleMap.setMyLocationEnabled(true);
         } else {
             // Uncheck the box until the layer has been enabled and request missing permission.
             mMyLocationCheckbox.setChecked(false);
@@ -135,7 +135,7 @@ public class LayersActivity extends AppCompatActivity
 ///////////////
         if (isPermissionGranted(permissions, results,
                 Manifest.permission.ACCESS_FINE_LOCATION)) {
-            mMap.setMyLocationEnabled(true);
+            googleMap.setMyLocationEnabled(true);
             mMyLocationCheckbox.setChecked(true);
         }
         else {
@@ -149,23 +149,23 @@ public class LayersActivity extends AppCompatActivity
     }
 
     private void updateMapType() {
-        if (mMap == null) {
+        if (googleMap == null) {
             return;
         }
 
         String layerName = ((String) mSpinner.getSelectedItem());
         if (layerName.equals(getString(R.string.normal))) {
-            mMap.setMapType(MAP_TYPE_NORMAL);
+            googleMap.setMapType(MAP_TYPE_NORMAL);
         } else if (layerName.equals(getString(R.string.hybrid))) {
-            mMap.setMapType(MAP_TYPE_HYBRID);
+            googleMap.setMapType(MAP_TYPE_HYBRID);
 
 
         } else if (layerName.equals(getString(R.string.satellite))) {
-            mMap.setMapType(MAP_TYPE_SATELLITE);
+            googleMap.setMapType(MAP_TYPE_SATELLITE);
         } else if (layerName.equals(getString(R.string.terrain))) {
-            mMap.setMapType(MAP_TYPE_TERRAIN);
+            googleMap.setMapType(MAP_TYPE_TERRAIN);
         } else if (layerName.equals(getString(R.string.none_map))) {
-            mMap.setMapType(MAP_TYPE_NONE);
+            googleMap.setMapType(MAP_TYPE_NONE);
         } else {
             Log.i("LDA", "Error setting layer with name " + layerName);
         }

@@ -11,7 +11,7 @@ import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
 public class ClusteringMapActivity extends FragmentActivity implements OnMapReadyCallback {
-    private GoogleMap mMap;
+    private GoogleMap googleMap;
     private ClusterManager<ClusterMarker> clusterManager;
 
     @Override
@@ -23,35 +23,20 @@ public class ClusteringMapActivity extends FragmentActivity implements OnMapRead
         mapFragment.getMapAsync(this);
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+        this.googleMap = googleMap;
+        this.googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(50.061625, 19.937153), 11));
 
         setupCluster();
     }
 
     private void setupCluster() {
+        clusterManager = new ClusterManager<ClusterMarker>(this, googleMap);
 
-        // Initialize the manager with the context and the map.
-        // (Activity extends context, so we can pass 'this' in the constructor.)
-        clusterManager = new ClusterManager<ClusterMarker>(this, mMap);
-
-        // Point the map's listeners at the listeners implemented by the cluster
-        // manager.
-        mMap.setOnCameraIdleListener(clusterManager);
-        mMap.setOnMarkerClickListener(clusterManager);
+        googleMap.setOnCameraIdleListener(clusterManager);
+        googleMap.setOnMarkerClickListener(clusterManager);
 
         createMarkers();
     }
