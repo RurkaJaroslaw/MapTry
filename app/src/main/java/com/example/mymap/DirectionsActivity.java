@@ -38,6 +38,7 @@ public class DirectionsActivity extends FragmentActivity implements OnMapReadyCa
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
     private boolean permissionDenied = false;
     private GoogleMap googleMap;
+    String apiKey = "PUT_YOUR_API_KEY_HERE";
     Polyline currentRoute;
 
     @Override
@@ -144,7 +145,6 @@ public class DirectionsActivity extends FragmentActivity implements OnMapReadyCa
     private void sendRequestToDirectionsApi(LatLng origin, LatLng destination) {
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String apiKey = "<API_KEY_HERE>";
         String url = String.format("https://maps.googleapis.com/maps/api/directions/json?origin=%.6f,%.6f&destination=%.6f,%.6f&key=%s", origin.latitude, origin.longitude, destination.latitude, destination.longitude, apiKey);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -167,7 +167,6 @@ public class DirectionsActivity extends FragmentActivity implements OnMapReadyCa
             }
         });
 
-// Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 

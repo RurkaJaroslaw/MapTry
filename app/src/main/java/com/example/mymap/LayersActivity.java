@@ -1,31 +1,21 @@
 package com.example.mymap;
 
-import android.annotation.SuppressLint;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
-import android.widget.Spinner;
-import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_HYBRID;
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NONE;
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL;
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_SATELLITE;
-import static com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN;
+import static com.google.android.gms.maps.GoogleMap.*;
 
 public class LayersActivity extends AppCompatActivity
         implements OnItemSelectedListener, OnMapReadyCallback,
@@ -103,12 +93,10 @@ public class LayersActivity extends AppCompatActivity
             return;
         }
 
-        // Enable the location layer. Request the location permission if needed.
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
             googleMap.setMyLocationEnabled(true);
         } else {
-            // Uncheck the box until the layer has been enabled and request missing permission.
             mMyLocationCheckbox.setChecked(false);
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -132,13 +120,12 @@ public class LayersActivity extends AppCompatActivity
         if (requestCode != LOCATION_PERMISSION_REQUEST_CODE) {
             return;
         }
-///////////////
+
         if (isPermissionGranted(permissions, results,
                 Manifest.permission.ACCESS_FINE_LOCATION)) {
             googleMap.setMyLocationEnabled(true);
             mMyLocationCheckbox.setChecked(true);
-        }
-        else {
+        } else {
             mShowPermissionDeniedDialog = true;
         }
     }
